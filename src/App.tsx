@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
-import RepositoryPage from './pages/RepositoryPage';
+import RepositoryListPage from './pages/RepositoryListPage';
 
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <RepositoryPage />
+      <RepositoryListPage />
     </Suspense>
   );
 }
