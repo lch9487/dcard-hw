@@ -1,36 +1,17 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { ChangeEvent, useState } from 'react';
 import RepositoryItem from './RepositoryItem';
+import { useFetchItems } from '../../hooks/useFetchItems';
 
 const RepositoryListPage = () => {
-  const [repositories, setRepositories] = useState([]);
   const [query, setQuery] = useState('');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `https://api.github.com/search/repositories?q=${query}&sort=stars&per_page=40&page=1`,
-        {
-          headers: {
-            Authorization: `token ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`,
-          },
-        }
-      );
-
-      setRepositories(response.data.items);
-    };
-
-    if (!!query) {
-      fetchData();
-    }
-  }, [query]);
+  const { isLoading, items, hasMoreItems, hasError } = useFetchItems(query);
 
   const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) =>
     setQuery(event.target.value);
 
   const renderRepositories = () => {
-    if (repositories.length > 0) {
-      return repositories.map((repository) => (
+    if (items.length > 0) {
+      return items.map((repository) => (
         <RepositoryItem
           // @ts-ignore
           key={repository.id}

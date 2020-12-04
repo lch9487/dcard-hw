@@ -10163,6 +10163,11 @@ rxjs@^6.4.0, rxjs@^6.5.2:
   dependencies:
     tslib "^1.9.0"
 
+safe-await@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/safe-await/-/safe-await-1.0.0.tgz#99a418dc208678bc4658e01ab60266682cf562b0"
+  integrity sha512-aak7LPeG0KNhwNpUlyV6p1S6f0FX+J1Tnreb9igmk+UFX4c690L/vu7mAnjOfnZq20YsI+gayk4i/PTL0lAXuw==
+
 safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"

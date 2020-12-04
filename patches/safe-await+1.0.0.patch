@@ -1,0 +1,11 @@
+diff --git a/node_modules/safe-await/lib/index.d.ts b/node_modules/safe-await/lib/index.d.ts
+new file mode 100644
+index 0000000..fd895ad
+--- /dev/null
++++ b/node_modules/safe-await/lib/index.d.ts
+@@ -0,0 +1,4 @@
++export default function safeAwait<T>(
++  promise: Promise<T>,
++  finallyFunc?: Function
++): Promise<[error: any, data: T]>;
+\ No newline at end of file
