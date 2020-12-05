@@ -19,7 +19,7 @@ export const S = {
     right: 0;
     text-align: center;
     z-index: 10;
-    background-color: black;
+    /* background-color: black; */
   `,
   Input: styled.input`
     width: 200px;

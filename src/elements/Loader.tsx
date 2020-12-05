@@ -1,31 +1,8 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-const Loader = () => {
-  const loader = useRef(null);
+import React from 'react';
+import Loader from 'react-loader-spinner';
 
-  const loadMore = useCallback((entries) => {
-    const target = entries[0];
-
-    // if (target.isIntersecting) {
-    //   !isFetching && fetchData();
-    // }
-  }, []);
-
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.25,
-    };
-
-    const observer = new IntersectionObserver(loadMore, options);
-
-    if (loader && loader.current) {
-      observer.observe(loader.current!);
-    }
-
-    return () => observer.unobserve(loader.current!);
-  }, [loader, loadMore]);
-};
-
-export default Loader;
+export default () => (
+  <Loader type="Watch" color="#00BFFF" height={100} width={100} />
+);

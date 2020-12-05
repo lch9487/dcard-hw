@@ -7,7 +7,7 @@ import { S } from './styles';
 import { isMobile } from '../../constants/isMobile';
 
 const RepositoryListPage = memo(() => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('react');
   const [lastRepositoryId, setLastRepositoryId] = useState<number | null>(null);
   const { isLoading, items, hasMoreItems, hasError } = useFetchItems(
     query,
@@ -55,7 +55,6 @@ const RepositoryListPage = memo(() => {
                 if (index === items.length - 1) {
                   return (
                     <div
-                      // @ts-ignore
                       key={items[index].id}
                       style={{
                         ...style,
