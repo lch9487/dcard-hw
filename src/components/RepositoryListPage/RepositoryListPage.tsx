@@ -1,14 +1,17 @@
 import React, {
   ChangeEvent,
+  CSSProperties,
+  memo,
   useCallback,
-  useEffect,
   useRef,
   useState,
 } from 'react';
+import { FixedSizeList } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import RepositoryItem from './RepositoryItem';
 import { useFetchItems } from '../../hooks/useFetchItems';
 
-const RepositoryListPage = () => {
+const RepositoryListPage = memo(() => {
   const [query, setQuery] = useState('');
   const [lastRepositoryId, setLastRepositoryId] = useState<number | null>(null);
   const { isLoading, items, hasMoreItems, hasError } = useFetchItems(
@@ -28,7 +31,6 @@ const RepositoryListPage = () => {
       }
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMoreItems) {
-          console.log('hi');
           setLastRepositoryId(node.dataset.id);
         }
       });
@@ -44,47 +46,68 @@ const RepositoryListPage = () => {
 
   const renderRepositories = () => {
     if (items.length > 0) {
-      return items.map((repository, index) => {
-        if (index === items.length - 1) {
-          return (
-            <div
-              // @ts-ignore
-              key={repository.id}
-              ref={lastRepositoryRef}
-              // @ts-ignore
-              data-id={repository.id}
+      return (
+        <AutoSizer>
+          {({ height, width }) => (
+            <FixedSizeList
+              className="List"
+              height={height}
+              width={width}
+              itemCount={items.length}
+              itemSize={163}
             >
-              <RepositoryItem
-                // @ts-ignore
-                name={repository.name}
-                // @ts-ignore
-                avatarUrl={repository.owner.avatar_url}
-                // language: string;
-                // description: string;
-                // stargazers_count
-              />
-            </div>
-          );
-        }
-
-        return (
-          <RepositoryItem
-            // @ts-ignore
-            key={repository.id}
-            // @ts-ignore
-            name={repository.name}
-            // @ts-ignore
-            avatarUrl={repository.owner.avatar_url}
-            // language: string;
-            // description: string;
-            // stargazers_count
-          />
-        );
-      });
+              {({ index, style }) => {
+                if (index === items.length - 1) {
+                  return (
+                    <div
+                      // @ts-ignore
+                      key={items[index].id}
+                      style={style}
+                      ref={lastRepositoryRef}
+                      // @ts-ignore
+                      data-id={items[index].id}
+                    >
+                      <RepositoryItem
+                        // @ts-ignore
+                        key={`item-${items[index].id}`}
+                        // @ts-ignore
+                        name={items[index].name}
+                        // @ts-ignore
+                        avatarUrl={items[index].owner.avatar_url}
+                        // language: string;
+                        // description: string;
+                        // stargazers_count
+                      />
+                    </div>
+                  );
+                }
+                return (
+                  // @ts-ignore
+                  <div key={items[index].id} style={style}>
+                    <RepositoryItem
+                      // @ts-ignore
+                      key={`item-${items[index].id}`}
+                      // @ts-ignore
+                      name={items[index].name}
+                      // @ts-ignore
+                      avatarUrl={items[index].owner.avatar_url}
+                      // language: string;
+                      // description: string;
+                      // stargazers_count
+                    />
+                  </div>
+                );
+              }}
+            </FixedSizeList>
+          )}
+        </AutoSizer>
+      );
     }
 
     return null;
   };
+
+  console.count();
 
   return (
     <>
@@ -92,6 +115,6 @@ const RepositoryListPage = () => {
       {renderRepositories()}
     </>
   );
-};
+});
 
 export default RepositoryListPage;

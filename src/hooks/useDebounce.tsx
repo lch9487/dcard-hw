@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import debounce from 'lodash.debounce';
 
-export const useDebounce = (obj: any = null, wait: number = 300) => {
+export const useDebounce = (obj: any = null, wait: number = 500) => {
   const [state, setState] = useState(obj);
 
   const setDebouncedState = (val: any) => {
