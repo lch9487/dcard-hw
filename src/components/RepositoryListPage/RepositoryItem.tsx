@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 interface Props {
-  key: number;
   name: string;
   avatarUrl: string;
   //   language: string;

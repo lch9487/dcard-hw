@@ -2,8 +2,13 @@ import { useEffect, useState } from 'react';
 import safeAwait from 'safe-await';
 import { getRepositories } from '../api';
 
-export const useFetchItems = (query: string) => {
-  const [isLoading, setIsLoading] = useState(true);
+let page = 1;
+
+export const useFetchItems = (
+  query: string,
+  lastRepositoryId: number | null
+) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [items, setItems] = useState([]);
   const [hasMoreItems, setHasMoreItems] = useState(true);
@@ -11,23 +16,54 @@ export const useFetchItems = (query: string) => {
   useEffect(() => {
     (async function fetchData() {
       if (!query) {
+        setIsLoading(false);
+        setHasMoreItems(false);
+        setHasError(false);
+        setItems([]);
+
         return;
       }
 
       setIsLoading(true);
 
-      const [error, response] = await safeAwait(getRepositories(query));
+      console.log('lastRepositoryId', lastRepositoryId);
 
-      if (error) {
-        setHasError(true);
+      if (lastRepositoryId) {
+        const [error, response] = await safeAwait(
+          getRepositories(query, ++page)
+        );
+
+        if (error) {
+          setIsLoading(false);
+          setHasMoreItems(false);
+          setHasError(true);
+
+          return;
+        }
+
+        setItems((prevItems) => [...prevItems, ...response.data.items]);
+        setHasMoreItems(response.data.items.length > 0);
+        setIsLoading(false);
+        setHasError(false);
+      } else {
+        page = 1;
+        const [error, response] = await safeAwait(getRepositories(query, page));
+
+        if (error) {
+          setIsLoading(false);
+          setHasMoreItems(false);
+          setHasError(true);
+
+          return;
+        }
+
+        setItems(response.data.items);
+        setHasMoreItems(response.data.items.length > 0);
+        setIsLoading(false);
+        setHasError(false);
       }
-
-      setItems(response.data.items);
-      setHasMoreItems(response.data.items.length > 0);
-      setIsLoading(false);
-      setHasError(false);
     })();
-  }, [query]);
+  }, [query, lastRepositoryId]);
 
   return { isLoading, items, hasMoreItems, hasError };
 };

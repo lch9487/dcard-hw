@@ -16,7 +16,7 @@ export const getRepositories = (
     params: {
       q: query,
       sort: 'stars',
-      per_page: 40,
+      per_page: 15,
       page,
     },
   });
