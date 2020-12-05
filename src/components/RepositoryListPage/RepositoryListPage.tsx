@@ -16,6 +16,7 @@ const RepositoryListPage = () => {
     lastRepositoryId
   );
 
+  // Infinite scroll
   const observer = useRef<IntersectionObserver>();
   const lastRepositoryRef = useCallback(
     (node) => {
@@ -42,8 +43,6 @@ const RepositoryListPage = () => {
   };
 
   const renderRepositories = () => {
-    console.log(items);
-
     if (items.length > 0) {
       return items.map((repository, index) => {
         if (index === items.length - 1) {
