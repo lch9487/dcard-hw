@@ -1,26 +1,28 @@
 import React, { FC } from 'react';
+import { S } from './styles';
 
 interface Props {
-  xxx?: string;
   name: string;
-  avatarUrl: string;
-  //   language: string;
-  //   description: string;
-  //   stargazers_count: number;
+  language: string;
+  description: string;
+  stargazersCount: number;
 }
 
-const RepositoryItem: FC<Props> = ({ xxx, name, avatarUrl }): JSX.Element => {
+const RepositoryItem: FC<Props> = ({
+  name,
+  language,
+  description,
+  stargazersCount,
+}): JSX.Element => {
   return (
-    <div key={`xxx-${xxx}`}>
-      <h1>{name}</h1>
-      <img
-        loading="lazy"
-        src={avatarUrl}
-        alt={`${name}-logo`}
-        width={100}
-        height={100}
-      />
-    </div>
+    <S.Card>
+      <S.TopWrapper>
+        <S.Title>{name}</S.Title>
+        <S.StarCount>{stargazersCount}</S.StarCount>
+      </S.TopWrapper>
+      <S.Description>{description}</S.Description>
+      <S.Note>{language}</S.Note>
+    </S.Card>
   );
 };
 

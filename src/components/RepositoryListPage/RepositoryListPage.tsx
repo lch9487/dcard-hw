@@ -1,15 +1,10 @@
-import React, {
-  ChangeEvent,
-  CSSProperties,
-  memo,
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, memo, useCallback, useRef, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import RepositoryItem from './RepositoryItem';
 import { useFetchItems } from '../../hooks/useFetchItems';
+import { S } from './styles';
+import { isMobile } from '../../constants/isMobile';
 
 const RepositoryListPage = memo(() => {
   const [query, setQuery] = useState('');
@@ -54,7 +49,7 @@ const RepositoryListPage = memo(() => {
               height={height}
               width={width}
               itemCount={items.length}
-              itemSize={163}
+              itemSize={isMobile ? 350 : 300}
             >
               {({ index, style }) => {
                 if (index === items.length - 1) {
@@ -62,38 +57,44 @@ const RepositoryListPage = memo(() => {
                     <div
                       // @ts-ignore
                       key={items[index].id}
-                      style={style}
+                      style={{
+                        ...style,
+                        marginTop: 150,
+                        marginBottom: 100,
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
                       ref={lastRepositoryRef}
-                      // @ts-ignore
                       data-id={items[index].id}
                     >
                       <RepositoryItem
-                        // @ts-ignore
                         key={`item-${items[index].id}`}
-                        // @ts-ignore
                         name={items[index].name}
-                        // @ts-ignore
-                        avatarUrl={items[index].owner.avatar_url}
-                        // language: string;
-                        // description: string;
-                        // stargazers_count
+                        language={items[index].language}
+                        description={items[index].description}
+                        stargazersCount={items[index].stargazers_count}
                       />
                     </div>
                   );
                 }
                 return (
-                  // @ts-ignore
-                  <div key={items[index].id} style={style}>
+                  <div
+                    // @ts-ignore
+                    key={items[index].id}
+                    style={{
+                      ...style,
+                      marginTop: 150,
+                      marginBottom: 100,
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <RepositoryItem
-                      // @ts-ignore
                       key={`item-${items[index].id}`}
-                      // @ts-ignore
                       name={items[index].name}
-                      // @ts-ignore
-                      avatarUrl={items[index].owner.avatar_url}
-                      // language: string;
-                      // description: string;
-                      // stargazers_count
+                      language={items[index].language}
+                      description={items[index].description}
+                      stargazersCount={items[index].stargazers_count}
                     />
                   </div>
                 );
@@ -111,7 +112,9 @@ const RepositoryListPage = memo(() => {
 
   return (
     <>
-      <input type="text" value={query} onChange={handleQueryChange} />
+      <S.Wrapper>
+        <S.Input type="text" value={query} onChange={handleQueryChange} />
+      </S.Wrapper>
       {renderRepositories()}
     </>
   );

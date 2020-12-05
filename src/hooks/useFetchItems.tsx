@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import safeAwait from 'safe-await';
 import { getRepositories } from '../api';
+import { Item } from '../types/RepositoriesType';
 import { useDebounce } from './useDebounce';
 
 let page = 1;
@@ -11,7 +12,7 @@ export const useFetchItems = (
 ) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<Item[] | []>([]);
   const [hasMoreItems, setHasMoreItems] = useState(true);
   const [debouncedState, setDebouncedState] = useDebounce(query);
 
