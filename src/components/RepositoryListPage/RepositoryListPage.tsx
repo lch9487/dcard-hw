@@ -45,17 +45,17 @@ const RepositoryListPage = () => {
       return (
         <div
           style={{
-            paddingTop: 200,
+            paddingTop: isMobile ? 150 : 200,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
           <div>
-            <Placeholder width={400} height={30} />
-            <Placeholder width={800} height={30} />
-            <Placeholder width={400} height={30} />
-            <Placeholder width={600} height={30} />
+            <Placeholder width={isMobile ? 140 : 400} height={25} />
+            <Placeholder width={isMobile ? 300 : 800} height={25} />
+            <Placeholder width={isMobile ? 140 : 400} height={25} />
+            <Placeholder width={isMobile ? 240 : 600} height={25} />
           </div>
         </div>
       );
@@ -104,10 +104,22 @@ const RepositoryListPage = () => {
                             }}
                           >
                             <div>
-                              <Placeholder width={400} height={30} />
-                              <Placeholder width={800} height={30} />
-                              <Placeholder width={400} height={30} />
-                              <Placeholder width={600} height={30} />
+                              <Placeholder
+                                width={isMobile ? 140 : 400}
+                                height={25}
+                              />
+                              <Placeholder
+                                width={isMobile ? 300 : 800}
+                                height={25}
+                              />
+                              <Placeholder
+                                width={isMobile ? 140 : 400}
+                                height={25}
+                              />
+                              <Placeholder
+                                width={isMobile ? 240 : 600}
+                                height={25}
+                              />
                             </div>
                           </div>
                         )}
