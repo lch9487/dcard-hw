@@ -1,4 +1,4 @@
-import React, { ChangeEvent, memo, useCallback, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import RepositoryItem from './RepositoryItem';
@@ -6,10 +6,10 @@ import { useFetchItems } from '../../hooks/useFetchItems';
 import { S } from './styles';
 import { isMobile } from '../../constants/isMobile';
 
-const RepositoryListPage = memo(() => {
+const RepositoryListPage = () => {
   const [query, setQuery] = useState('react');
   const [lastRepositoryId, setLastRepositoryId] = useState<number | null>(null);
-  const { isLoading, items, hasMoreItems, hasError } = useFetchItems(
+  const { isLoading, items, hasMoreItems } = useFetchItems(
     query,
     lastRepositoryId
   );
@@ -107,8 +107,6 @@ const RepositoryListPage = memo(() => {
     return null;
   };
 
-  console.count();
-
   return (
     <>
       <S.Wrapper>
@@ -117,6 +115,6 @@ const RepositoryListPage = memo(() => {
       {renderRepositories()}
     </>
   );
-});
+};
 
 export default RepositoryListPage;
