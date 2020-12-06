@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import Loader from './elements/Loader';
+import Loader from './elements/Loader/Loader';
 
 import RepositoryListPage from './pages/RepositoryListPage';
 

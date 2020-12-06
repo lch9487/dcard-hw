@@ -5,6 +5,7 @@ import RepositoryItem from './RepositoryItem';
 import { useFetchItems } from '../../hooks/useFetchItems';
 import { S } from './styles';
 import { isMobile } from '../../constants/isMobile';
+import Placeholder from '../../elements/Placeholder/Placeholder';
 
 const RepositoryListPage = () => {
   const [query, setQuery] = useState('react');
@@ -40,6 +41,26 @@ const RepositoryListPage = () => {
   };
 
   const renderRepositories = () => {
+    if (items.length === 0 && isLoading) {
+      return (
+        <div
+          style={{
+            paddingTop: 200,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <Placeholder width={400} height={30} />
+            <Placeholder width={800} height={30} />
+            <Placeholder width={400} height={30} />
+            <Placeholder width={600} height={30} />
+          </div>
+        </div>
+      );
+    }
+
     if (items.length > 0) {
       return (
         <AutoSizer>
@@ -59,31 +80,47 @@ const RepositoryListPage = () => {
                       style={{
                         ...style,
                         marginTop: 150,
-                        marginBottom: 100,
                         display: 'flex',
                         justifyContent: 'center',
                       }}
                       ref={lastRepositoryRef}
                       data-id={items[index].id}
                     >
-                      <RepositoryItem
-                        key={`item-${items[index].id}`}
-                        name={items[index].name}
-                        language={items[index].language}
-                        description={items[index].description}
-                        stargazersCount={items[index].stargazers_count}
-                      />
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <RepositoryItem
+                          key={`item-${items[index].id}`}
+                          name={items[index].name}
+                          language={items[index].language}
+                          description={items[index].description}
+                          stargazersCount={items[index].stargazers_count}
+                        />
+                        {isLoading && (
+                          <div
+                            style={{
+                              paddingTop: 50,
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <div>
+                              <Placeholder width={400} height={30} />
+                              <Placeholder width={800} height={30} />
+                              <Placeholder width={400} height={30} />
+                              <Placeholder width={600} height={30} />
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 }
                 return (
                   <div
-                    // @ts-ignore
                     key={items[index].id}
                     style={{
                       ...style,
                       marginTop: 150,
-                      marginBottom: 100,
                       display: 'flex',
                       justifyContent: 'center',
                     }}
